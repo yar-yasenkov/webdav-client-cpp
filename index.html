@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Webdav-client-cpp by designerror</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Webdav-client-cpp</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/designerror/webdav-client-cpp" class="btn">View on GitHub</a>
+      <a href="https://github.com/designerror/webdav-client-cpp/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/designerror/webdav-client-cpp/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="webdav-client" class="anchor" href="#webdav-client" aria-hidden="true"><span class="octicon octicon-link"></span></a>WebDAV Client</h1>
+
+<p>Package <code>WebDAV Client</code> provides easy and convenient to work with WebDAV-servers:</p>
+
+<ul>
+<li>Yandex.Disk</li>
+<li>Dropbox</li>
+<li>Google Drive</li>
+<li>Box</li>
+<li>4shared</li>
+<li>...</li>
+</ul>
+
+<h1>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h1>
+
+<div class="highlight highlight-bash"><pre><span class="pl-k">&gt;</span> git clone https://github.com/designerror/webdav-client-cpp.git
+<span class="pl-k">&gt;</span> <span class="pl-c1">cd</span> webdav-client-cpp
+<span class="pl-k">&gt;</span> clion <span class="pl-c1">.</span></pre></div>
+
+<h1>
+<a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Documentation</h1>
+
+<div class="highlight highlight-bash"><pre><span class="pl-k">&gt;</span> <span class="pl-c1">cd</span> docs
+<span class="pl-k">&gt;</span> doxygen doxygen.conf
+<span class="pl-k">&gt;</span> firefox html/index.html</pre></div>
+
+<h1>
+<a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage examples</h1>
+
+<div class="highlight highlight-c++"><pre>#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>iostream<span class="pl-pds">&gt;</span></span>
+#<span class="pl-k">include</span> <span class="pl-s"><span class="pl-pds">&lt;</span>webdav/client.hpp<span class="pl-pds">&gt;</span></span>
+
+<span class="pl-k">int</span> <span class="pl-en">main</span>()
+{
+  std::map&lt;std::string, std::string&gt; options =
+  {
+    {<span class="pl-s"><span class="pl-pds">"</span>webdav_hostname<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>https://webdav.yandex.ru<span class="pl-pds">"</span></span>},
+    {<span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>{webdav_login}<span class="pl-pds">"</span></span>},
+    {<span class="pl-s"><span class="pl-pds">"</span>webdav_password<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>{webdav_password}<span class="pl-pds">"</span></span>}
+  };
+
+  WebDAV::Client <span class="pl-smi">client</span>(options);
+
+  <span class="pl-k">auto</span> check_connection = client.<span class="pl-c1">check</span>();
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>test connection with WebDAV drive is <span class="pl-pds">"</span></span> 
+            &lt;&lt; (check_connection ? <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span> : <span class="pl-s"><span class="pl-pds">"</span>not <span class="pl-pds">"</span></span>)
+            &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>successful<span class="pl-pds">"</span></span>&lt;&lt; std::endl;
+
+  <span class="pl-k">auto</span> is_directory = client.<span class="pl-c1">is_dir</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/resource<span class="pl-pds">"</span></span>);
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>remote resource is <span class="pl-pds">"</span></span> 
+            &lt;&lt; (is_directory ? <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pds">"</span></span> : <span class="pl-s"><span class="pl-pds">"</span>not <span class="pl-pds">"</span></span>) 
+            &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>directory<span class="pl-pds">"</span></span> &lt;&lt; std::endl;
+
+  client.<span class="pl-c1">create_directory</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/directory/<span class="pl-pds">"</span></span>);
+  client.<span class="pl-c1">clean</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/directory/<span class="pl-pds">"</span></span>);
+
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>On WebDAV-disk available free space: <span class="pl-pds">"</span></span> 
+            &lt;&lt; client.<span class="pl-c1">free_size</span>() 
+            &lt;&lt; std::endl;
+
+  std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>remote_directory_name<span class="pl-pds">"</span></span>;
+  <span class="pl-k">for</span>(<span class="pl-k">auto</span> resource_name : client.<span class="pl-c1">list</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/directory/<span class="pl-pds">"</span></span>))
+  {
+    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>-<span class="pl-pds">"</span></span> &lt;&lt; resource_name;
+  }
+  std::cout &lt;&lt; std::endl;
+
+  client.<span class="pl-c1">download</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/local/file<span class="pl-pds">"</span></span>);
+  client.<span class="pl-c1">clean</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>);
+  client.<span class="pl-c1">upload</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/local/file<span class="pl-pds">"</span></span>);
+
+  <span class="pl-k">auto</span> meta_info = client.<span class="pl-c1">info</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/resource<span class="pl-pds">"</span></span>);
+  <span class="pl-k">for</span>(<span class="pl-k">auto</span> field : meta_info)
+  {
+    std::cout &lt;&lt; field.<span class="pl-smi">first</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>:<span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; field.<span class="pl-smi">second</span>;
+  }
+  std::cout &lt;&lt; std::endl;
+
+  client.<span class="pl-c1">copy</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file1<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file2<span class="pl-pds">"</span></span>);
+  client.<span class="pl-c1">move</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file1<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file3<span class="pl-pds">"</span></span>);
+
+  client.<span class="pl-c1">async_upload</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/local/file<span class="pl-pds">"</span></span>);
+  client.<span class="pl-c1">async_download</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/local/file<span class="pl-pds">"</span></span>);
+}</pre></div>
+
+<h1>
+<a id="acknowledgments" class="anchor" href="#acknowledgments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Acknowledgments</h1>
+
+<p>Thanks to the <code>JetBrains</code> company for</p>
+
+<p><a href="https://www.jetbrains.com/clion/"><img src="http://s16.postimg.org/941c7ix9d/clion.png" alt="Clion"></a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/designerror/webdav-client-cpp">Webdav-client-cpp</a> is maintained by <a href="https://github.com/designerror">designerror</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
