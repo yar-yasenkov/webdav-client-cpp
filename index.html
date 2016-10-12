@@ -22,8 +22,9 @@
       <h1>
 <a id="webdav-client" class="anchor" href="#webdav-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebDAV Client</h1>
 
-<p><a href="https://gitter.im/designerror/webdav-client-cpp?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img src="https://badges.gitter.im/designerror/webdav-client-cpp.svg" alt="Gitter"></a>
-<a href="https://travis-ci.org/designerror/webdav-client-cpp"><img src="https://travis-ci.org/designerror/webdav-client-cpp.svg?branch=v0.9.5" alt="Build Status"></a></p>
+<p><a href="https://github.com/designerror/webdav-client-cpp/releases/tag/v0.9.6"><img src="https://img.shields.io/badge/version-0.9.6-brightgreen.svg" alt="version"></a>
+<a href="http://webdav.slack.com"><img src="https://img.shields.io/badge/slack-online-E32475.svg" alt="slack"></a>
+<a href="https://travis-ci.org/designerror/webdav-client-cpp"><img src="https://travis-ci.org/designerror/webdav-client-cpp.svg?branch=v0.9.6" alt="Build Status"></a></p>
 
 <p>Package <code>WebDAV Client</code> provides easy and convenient to work with WebDAV-servers:</p>
 
@@ -37,11 +38,46 @@
 </ul>
 
 <h1>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h1>
+
+<ul>
+<li>
+<a href="https://github.com/curl/curl">curl</a> <code>&gt;= 7.48</code>
+</li>
+<li>
+<a href="https://github.com/openssl/openssl">openssl</a> <code>&gt;= 1.0.2g</code>
+</li>
+<li>
+<a href="https://github.com/zeux/pugixml">pugixml</a> <code>&gt;= 1.0.7</code>
+</li>
+</ul>
+
+<h1>
 <a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h1>
 
-<div class="highlight highlight-source-shell"><pre><span class="pl-k">&gt;</span> git clone https://github.com/designerror/webdav-client-cpp.git
-<span class="pl-k">&gt;</span> <span class="pl-c1">cd</span> webdav-client-cpp
-<span class="pl-k">&gt;</span> clion <span class="pl-c1">.</span></pre></div>
+<p>For <code>Windows</code> see <code>INSTALL.WIN.md</code> file.</p>
+
+<p><strong>Build requirements</strong></p>
+
+<p>For <code>*-nix</code> or <code>macOS</code> you can build the requirements with package manager or from sources.</p>
+
+<p>If you want build the requirements from sources then see <code>INSTALL.UNIX.md</code> and <code>INSTALL.macOS.md</code> respectively.</p>
+
+<p>If you want use package manager then input:</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># *-nix</span>
+$ apt-get install libssl-dev libcurl4-openssl-dev libpugixml-dev
+
+<span class="pl-c"># macOS</span>
+$ brew install curl pugixml</pre></div>
+
+<p><strong>Build Webdav Client</strong></p>
+
+<div class="highlight highlight-source-shell"><pre>$ git clone https://github.com/designerror/webdav-client-cpp
+$ <span class="pl-c1">cd</span> webdav-client-cpp
+$ mkdir build <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> build
+$ cmake .. <span class="pl-k">&amp;&amp;</span> make
+$ make install</pre></div>
 
 <h1>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h1>
@@ -62,7 +98,7 @@
   std::map&lt;std::string, std::string&gt; options =
   {
     {<span class="pl-s"><span class="pl-pds">"</span>webdav_hostname<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>https://webdav.yandex.ru<span class="pl-pds">"</span></span>},
-    {<span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>},
+    {<span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>,    <span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>},
     {<span class="pl-s"><span class="pl-pds">"</span>webdav_password<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>webdav_password<span class="pl-pds">"</span></span>}
   };
 
@@ -86,7 +122,7 @@
             &lt;&lt; std::endl;
 
   std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>remote_directory_name<span class="pl-pds">"</span></span>;
-  <span class="pl-k">for</span>(<span class="pl-k">auto</span> resource_name : client-&gt;<span class="pl-c1">list</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/directory/<span class="pl-pds">"</span></span>))
+  <span class="pl-k">for</span>(<span class="pl-k">auto</span>&amp; resource_name : client-&gt;<span class="pl-c1">list</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/directory/<span class="pl-pds">"</span></span>))
   {
     std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>-<span class="pl-pds">"</span></span> &lt;&lt; resource_name;
   }
@@ -97,7 +133,7 @@
   client-&gt;<span class="pl-c1">upload</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/local/file<span class="pl-pds">"</span></span>);
 
   <span class="pl-k">auto</span> meta_info = client-&gt;<span class="pl-c1">info</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/resource<span class="pl-pds">"</span></span>);
-  <span class="pl-k">for</span>(<span class="pl-k">auto</span> field : meta_info)
+  <span class="pl-k">for</span>(<span class="pl-k">auto</span>&amp; field : meta_info)
   {
     std::cout &lt;&lt; field.<span class="pl-smi">first</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>:<span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; field.<span class="pl-smi">second</span>;
   }
