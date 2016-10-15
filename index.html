@@ -22,9 +22,9 @@
       <h1>
 <a id="webdav-client" class="anchor" href="#webdav-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebDAV Client</h1>
 
-<p><a href="https://github.com/designerror/webdav-client-cpp/releases/tag/v0.9.7"><img src="https://img.shields.io/badge/version-0.9.7-brightgreen.svg" alt="version"></a>
+<p><a href="https://github.com/designerror/webdav-client-cpp/releases/tag/v0.9.9"><img src="https://img.shields.io/badge/version-0.9.9-brightgreen.svg" alt="version"></a>
 <a href="http://webdav.slack.com"><img src="https://img.shields.io/badge/slack-online-E32475.svg" alt="slack"></a>
-<a href="https://travis-ci.org/designerror/webdav-client-cpp"><img src="https://travis-ci.org/designerror/webdav-client-cpp.svg?branch=v0.9.7" alt="Build Status"></a></p>
+<a href="https://travis-ci.org/designerror/webdav-client-cpp"><img src="https://travis-ci.org/designerror/webdav-client-cpp.svg?branch=v0.9.9" alt="Build Status"></a></p>
 
 <p>Package <code>WebDAV Client</code> provides easy and convenient to work with WebDAV-servers:</p>
 
@@ -57,13 +57,13 @@
 
 <p>For <code>Windows</code> see <code>INSTALL.WIN.md</code> file.</p>
 
-<p><strong>Build requirements</strong></p>
+<p><strong>Building requirements</strong></p>
 
 <p>For <code>*-nix</code> or <code>macOS</code> you can build the requirements with package manager or from sources.</p>
 
-<p>If you want build the requirements from sources then see <code>INSTALL.UNIX.md</code> and <code>INSTALL.macOS.md</code> respectively.</p>
+<p>If you want to build the requirements from sources then see <code>INSTALL.UNIX.md</code> and <code>INSTALL.macOS.md</code> respectively.</p>
 
-<p>If you want use package manager then input:</p>
+<p>If you want to use package manager then input:</p>
 
 <div class="highlight highlight-source-shell"><pre><span class="pl-c"># *-nix</span>
 $ apt-get install libssl-dev libcurl4-openssl-dev libpugixml-dev
@@ -71,20 +71,22 @@ $ apt-get install libssl-dev libcurl4-openssl-dev libpugixml-dev
 <span class="pl-c"># macOS</span>
 $ brew install curl pugixml</pre></div>
 
-<p><strong>Build Webdav Client</strong></p>
+<p><strong>Building WebDAV Client</strong></p>
 
 <div class="highlight highlight-source-shell"><pre>$ git clone https://github.com/designerror/webdav-client-cpp
 $ <span class="pl-c1">cd</span> webdav-client-cpp
 $ mkdir build <span class="pl-k">&amp;&amp;</span> <span class="pl-c1">cd</span> build
+<span class="pl-c"># The next line is needed for building on macOS</span>
+$ <span class="pl-k">export</span> OPENSSL_ROOT_DIR=/usr/local/opt/openssl/
 $ cmake .. <span class="pl-k">&amp;&amp;</span> make
 $ make install</pre></div>
 
 <h1>
 <a id="documentation" class="anchor" href="#documentation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documentation</h1>
 
-<div class="highlight highlight-source-shell"><pre><span class="pl-k">&gt;</span> <span class="pl-c1">cd</span> docs
-<span class="pl-k">&gt;</span> doxygen doxygen.conf
-<span class="pl-k">&gt;</span> firefox html/index.html</pre></div>
+<div class="highlight highlight-source-shell"><pre>$ <span class="pl-c1">cd</span> docs
+$ doxygen doxygen.conf
+$ firefox html/index.html</pre></div>
 
 <h1>
 <a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage examples</h1>
@@ -145,6 +147,15 @@ $ make install</pre></div>
   client-&gt;<span class="pl-c1">async_upload</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/local/file<span class="pl-pds">"</span></span>);
   client-&gt;<span class="pl-c1">async_download</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/file<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>/path/to/local/file<span class="pl-pds">"</span></span>);
 }</pre></div>
+
+<h1>
+<a id="soon" class="anchor" href="#soon" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Soon</h1>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># *-nix</span>
+$ apt-get install libwdc-dev
+
+<span class="pl-c"># macOS</span>
+$ brew install wdc</pre></div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/designerror/webdav-client-cpp">webdavclient</a> is maintained by <a href="https://github.com/designerror">designerror</a>.</span>
