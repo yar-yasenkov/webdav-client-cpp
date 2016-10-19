@@ -23,8 +23,9 @@
 <a id="webdav-client" class="anchor" href="#webdav-client" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>WebDAV Client</h1>
 
 <p><a href="https://github.com/designerror/webdav-client-cpp/releases/tag/v0.9.9"><img src="https://img.shields.io/badge/version-0.9.9-brightgreen.svg" alt="version"></a>
-<a href="http://webdav.slack.com"><img src="https://img.shields.io/badge/slack-online-E32475.svg" alt="slack"></a>
-<a href="https://travis-ci.org/designerror/webdav-client-cpp"><img src="https://travis-ci.org/designerror/webdav-client-cpp.svg?branch=v0.9.9" alt="Build Status"></a></p>
+<a href="https://gitter.im/designerror/webdav-client-cpp?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge"><img src="https://badges.gitter.im/designerror/webdav-client-cpp.svg" alt="Gitter"></a>
+<a href="https://travis-ci.org/designerror/webdav-client-cpp"><img src="https://travis-ci.org/designerror/webdav-client-cpp.svg?branch=v0.9.9" alt="Build Status"></a>
+<a href="https://ci.appveyor.com/project/designerror/webdav-client-cpp"><img src="https://ci.appveyor.com/api/projects/status/l0nwebsyxwcc3lcs?svg=true" alt="Build status"></a></p>
 
 <p>Package <code>WebDAV Client</code> provides easy and convenient to work with WebDAV-servers:</p>
 
@@ -65,8 +66,11 @@
 
 <p>If you want to use package manager then input:</p>
 
-<div class="highlight highlight-source-shell"><pre><span class="pl-c"># *-nix</span>
-$ apt-get install libssl-dev libcurl4-openssl-dev libpugixml-dev
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># Debian or Ubuntu</span>
+$ sudo apt-get install libssl-dev libcurl4-openssl-dev libpugixml-dev
+
+<span class="pl-c"># Fedora</span>
+$ sudo dnf install openssl-devel curl-devel pugixml-devel
 
 <span class="pl-c"># macOS</span>
 $ brew install curl pugixml</pre></div>
@@ -99,10 +103,14 @@ $ firefox html/index.html</pre></div>
 {
   std::map&lt;std::string, std::string&gt; options =
   {
-    {<span class="pl-s"><span class="pl-pds">"</span>webdav_hostname<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>https://webdav.yandex.ru<span class="pl-pds">"</span></span>},
-    {<span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>,    <span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>},
-    {<span class="pl-s"><span class="pl-pds">"</span>webdav_password<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>webdav_password<span class="pl-pds">"</span></span>}
+      {<span class="pl-s"><span class="pl-pds">"</span>webdav_hostname<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>https://webdav.yandex.ru<span class="pl-pds">"</span></span>},
+      {<span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>,    <span class="pl-s"><span class="pl-pds">"</span>webdav_login<span class="pl-pds">"</span></span>},
+      {<span class="pl-s"><span class="pl-pds">"</span>webdav_password<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>webdav_password<span class="pl-pds">"</span></span>}
   };
+  <span class="pl-c">// additional keys: </span>
+  <span class="pl-c">// - webdav_root</span>
+  <span class="pl-c">// - cert_path, key_path</span>
+  <span class="pl-c">// - proxy_hostname, proxy_login, proxy_password</span>
 
   std::shared_ptr&lt;WebDAV::Client&gt; <span class="pl-c1">client</span>(<span class="pl-c1">WebDAV::Client::Init</span>(options));
 
@@ -126,7 +134,7 @@ $ firefox html/index.html</pre></div>
   std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>remote_directory_name<span class="pl-pds">"</span></span>;
   <span class="pl-k">for</span>(<span class="pl-k">auto</span>&amp; resource_name : client-&gt;<span class="pl-c1">list</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/directory/<span class="pl-pds">"</span></span>))
   {
-    std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>-<span class="pl-pds">"</span></span> &lt;&lt; resource_name;
+      std::cout &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>-<span class="pl-pds">"</span></span> &lt;&lt; resource_name;
   }
   std::cout &lt;&lt; std::endl;
 
@@ -137,7 +145,7 @@ $ firefox html/index.html</pre></div>
   <span class="pl-k">auto</span> meta_info = client-&gt;<span class="pl-c1">info</span>(<span class="pl-s"><span class="pl-pds">"</span>/path/to/remote/resource<span class="pl-pds">"</span></span>);
   <span class="pl-k">for</span>(<span class="pl-k">auto</span>&amp; field : meta_info)
   {
-    std::cout &lt;&lt; field.<span class="pl-smi">first</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>:<span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; field.<span class="pl-smi">second</span>;
+      std::cout &lt;&lt; field.<span class="pl-smi">first</span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span>:<span class="pl-pds">"</span></span> &lt;&lt; <span class="pl-s"><span class="pl-pds">"</span><span class="pl-cce">\t</span><span class="pl-pds">"</span></span> &lt;&lt; field.<span class="pl-smi">second</span>;
   }
   std::cout &lt;&lt; std::endl;
 
@@ -151,8 +159,11 @@ $ firefox html/index.html</pre></div>
 <h1>
 <a id="soon" class="anchor" href="#soon" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Soon</h1>
 
-<div class="highlight highlight-source-shell"><pre><span class="pl-c"># *-nix</span>
-$ apt-get install libwdc-dev
+<div class="highlight highlight-source-shell"><pre><span class="pl-c"># Debian or Ubuntu</span>
+$ sudo apt-get install libwdc-dev
+
+<span class="pl-c"># Fedora</span>
+$ sudo dnf install wdc-devel
 
 <span class="pl-c"># macOS</span>
 $ brew install wdc</pre></div>
